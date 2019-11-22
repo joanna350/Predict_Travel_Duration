@@ -1,5 +1,7 @@
 import pandas as pd
 from datetime import datetime
+import pickle
+import sys
 
 
 def read_in(path,sep):
@@ -55,8 +57,23 @@ def fill_loc_trips(trips_data, lat_dict, lng_dict):
 
     mean_lat = trips_data['lat'].mean()
     mean_lng = trips_data['lng'].mean()
+
     trips_data['lat'] = trips_data['lat'].fillna(mean_lat)
     trips_data['lng'] = trips_data['lng'].fillna(mean_lng)
+
+    lat_dict_rest, lng_dict_rest = lat_dict, lng_dict
+
+    # URL request purpose
+    lat_dict_rest['KeyError'] = mean_lat
+    lng_dict_rest['KeyError'] = mean_lng
+
+    with open('lat_dict.p', 'wb') as out_path:
+        pickle.dump(lat_dict_rest, out_path, -1)
+
+    with open('lng_dict.p', 'wb') as out_path:
+        pickle.dump(lng_dict_rest, out_path, -1)
+
+    #sys.exit()
 
     return trips_data
 
@@ -82,6 +99,7 @@ def run(path_trp = 'data/hubway_trips.csv',
     print(stn_df[stn_df['lng'].isnull()])
 
     stn_df, lat_dict, lng_dict = fill_loc_statn(stn_df)
+
     trips_data = fill_loc_trips(trips_data, lat_dict, lng_dict)
 
     # TODO:
@@ -92,5 +110,4 @@ def run(path_trp = 'data/hubway_trips.csv',
 
 
 if __name__ =='__main__':
-
     _ = run()

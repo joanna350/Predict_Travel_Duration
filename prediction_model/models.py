@@ -47,7 +47,7 @@ class Model():
         std = self.df['lng'].std()
         self.df['lng'] = (self.df['lng'] - mean) / std
 
-        indexes =self.df['gender']=='Unknown'
+        #indexes =self.df['gender']=='Unknown'
 
         # uncalled for
         #self.df = self.df[self.df['gender'] != 'Unknown']
@@ -97,7 +97,7 @@ class Model():
         print('check again: ',y.shape)
 
         w = np.linalg.lstsq(reg_A, y, rcond=1)[0]
-        print('what? weight shape?', w.shape)
+        print('shape?', w.shape)
         print('weight',w[:-1])
         print('bias', w[-1])
         self.weight, self.bias = w[:-1], w[-1]
@@ -106,12 +106,14 @@ class Model():
         print('RMSE per training data...: {}'.format(rmse_training))
 
 
-    def predict(self):
+    def predict(self, X):
         '''
         input: age, lat, lng, gender - Test data
         use the weight params from fit process using training data
         '''
-        pred = np.dot(self.X_test, self.weight) + self.bias
+        if X == 'None':
+            X = self.X_test
+        pred = np.dot(X, self.weight) + self.bias
         rmse_test = RMSE(pred, self.y_test)
         print('RMSE for test data...: {}'.format(rmse_test))
 
@@ -122,6 +124,7 @@ class Model():
 def main(df, filename):
 
     linearRegressionModel = Model(df)
+
     toc = time.time()
     linearRegressionModel.process_data() # updates data split
     linearRegressionModel.fit()         # updates weight/bias params
@@ -131,6 +134,7 @@ def main(df, filename):
 
     if os.path.isfile(filename):
         filename = 'model' + str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")) + '.p'
+
     with open(filename, 'wb') as out_path:
         pickle.dump(linearRegressionModel, out_path, -1)
 

@@ -6,15 +6,18 @@ Python 3.7
 
 ### Dependency
 ```
+flask==1.1.1
 pandas==0.25.1
 sklearn==0.21.3
 numpy==1.17.2
+flask-restful
 ```
 
 ### Installation
 ```
 python(version adequately) -m pip install --user -Iv '__package_name__==__version__'
 ```
+* I didn't use version match, but it may be necessary in the future
 
 ### File Structure
 ```
@@ -58,3 +61,25 @@ import prediction_model
 prediction_mode.preprocess.run() # default path settings will apply at the root of the directory.
 prediction_mode.models.main(dataframe_returned_from_run, output_path)
 ```
+
+### Emit Prediction Result using REST Endpoint
+
+* To Run:
+```
+python(again-adequate-versionname-if-no-alias) server.py
+```
+
+* Launch on 
+```
+http://0.0.0.0:8000/parameters?gender={USER_SET}&age={US}&id={US}
+```
+
+* US short for user-set, parameters {gender, age, station id} can vary in order
+
+* Example:
+```
+http://0.0.0.0:8000/parameters?gender=Male&age=24&id=4
+```
+
+* Returns jsonified response based on pure calculation
+
