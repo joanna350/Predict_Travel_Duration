@@ -8,11 +8,11 @@ from sklearn.model_selection import train_test_split
 
 
 def RMSE(pred, true):
-    '''evaluation metric'''
+    '''
+    evaluation metric specifically written for pandas dataframe
+    '''
     pred = pred.reshape(-1, 1)
-    print('check prediction size: ', pred.shape)
     true = true.to_numpy().reshape(-1, 1)
-    print('check true size: ', true.shape)
 
     k = (pred- true)**2
     E = np.sqrt(k.mean())
@@ -22,12 +22,8 @@ def RMSE(pred, true):
 
 class Model():
     '''
-    process_more: age -> min-max normalisation
-                  lat, lng -> standard norm
-                  gender -> one-hot encoding
-    evaluation: RMSE
-    choice: linear regression
-    For time efficiency, processing handled in separate function.
+    Linear Regression emitting RMSE
+    For efficiency, normalizing step handled in separate function.
     Then plugging into fit/predict. Skipping KFold.
     '''
     def __init__(self, df):
@@ -36,6 +32,13 @@ class Model():
         self.bias = 0
 
     def process_data(self):
+        '''
+        normalise: age -> min-max normalisation
+                    lat, lng -> standard norm
+                    gender -> one-hot encoding
+        train/test split: 4 to 1
+        :stores: split data
+        '''
         minv = self.df['age'].max()
         maxv = self.df['age'].min()
         self.df['age'] = (self.df['age'] - minv) / (maxv - minv)
@@ -47,19 +50,8 @@ class Model():
         std = self.df['lng'].std()
         self.df['lng'] = (self.df['lng'] - mean) / std
 
-        #indexes =self.df['gender']=='Unknown'
-
-        # uncalled for
-        #self.df = self.df[self.df['gender'] != 'Unknown']
-        #self.df = self.df[self.df['duration']>= 0]
-
-        print('druation max', self.df['duration'].max())
-        print('druation min', self.df['duration'].min())
-        print('druation avg', self.df['duration'].mean())
-        print('druation median', self.df['duration'].median())
-
         # don't think it's a good idea, but checked that it assigns Unknown to 0 (same as male)
-        # acc to some discussions online thats a supposedly more proper way to handle
+        # acc to some discussions online it is a more proper way to handle such situation
         self.df['gender'] = pd.get_dummies(self.df['gender'])
 
         X = pd.concat([self.df['age'], self.df['lat'],
@@ -69,38 +61,26 @@ class Model():
         self.X_train, self.X_test, self.y_train, self.y_test =\
                     train_test_split(X, y, test_size = 0.2, random_state = 42)
 
-       # print('length of training data size', len(self.X_train), len(self.y_train)) 1200176
-       # print('length of test data size', len(self.X_test), len(self.y_test)) 300045
-       # print('index check for training data\n', self.X_train, '\n', self.y_train)
-       # print('index check for test data\n', self.X_test,'\n', self.y_test)
-
 
     def fit(self, alpha = 10):
         '''
-        input: Training data (0.8)
+        fitting function specific for dataframe of the given data
+        while debugging, always check the shape
+        :param alpha: testable regularizer
+        :stores: weight and bias parameters for prediction
+        :emits: RMSE
         '''
         X = np.hstack([self.X_train, np.ones((self.X_train.shape[0], 1))])
-        print('check buffed X shape')
-        print(X.shape)
         regularI = np.sqrt(alpha) * np.identity(X.shape[1], int)
 
         # skip the last row so as not to regularize bias
         reg_A = np.vstack([X, regularI[:-1]])
-        print('check regularizer shape')
-        print(reg_A.shape)
 
-        print('y-------------------------------------------------------')
-        print(len(self.y_train),'\n',self.y_train)
-        print('X-------------------------------------------------------')
-        print(X.shape, '\n', X)
         y = np.vstack((self.y_train[:,None], np.zeros(X.shape[1] - 1)[:, None]))
-        print('check again: ',y.shape)
 
         w = np.linalg.lstsq(reg_A, y, rcond=1)[0]
-        print('shape?', w.shape)
-        print('weight',w[:-1])
-        print('bias', w[-1])
         self.weight, self.bias = w[:-1], w[-1]
+
         pred = np.dot(self.X_train, self.weight) + self.bias
         rmse_training = RMSE(pred, self.y_train)
         print('RMSE per training data...: {}'.format(rmse_training))
@@ -108,13 +88,17 @@ class Model():
 
     def predict(self, X):
         '''
-        input: age, lat, lng, gender - Test data
-        use the weight params from fit process using training data
+        use the weight/bias params from fit function
+        :param X: used for prediction
+        :emits: RMSE based on test data
         '''
+
         if X == 'None':
             X = self.X_test
+
         pred = np.dot(X, self.weight) + self.bias
         rmse_test = RMSE(pred, self.y_test)
+
         print('RMSE for test data...: {}'.format(rmse_test))
 
     # TODO:
@@ -122,7 +106,13 @@ class Model():
 
 
 def main(df, filename):
-
+    '''
+    main function for linear regression training and predicting pipeline
+    including saving the instance to a pickle
+    :param df: dataframe retrieved from preprocess.py
+    :param filename: to save the instance of the class Model
+    :stores: pickle 'filename'
+    '''
     linearRegressionModel = Model(df)
 
     toc = time.time()
@@ -139,7 +129,11 @@ def main(df, filename):
         pickle.dump(linearRegressionModel, out_path, -1)
 
 def argparser():
-
+    '''
+    to run the scripts in one-liner (./run.sh shall take care of this)
+    slightly hardcoded at the moment
+    :return: input and output filepaths
+    '''
     parser = argparse.ArgumentParser()
     parser.add_argument('-tripDataPath', action='store', type = str, help='specific file on trips')
     parser.add_argument('-stationDataPath', action='store', type = str, help='specific file on stations')

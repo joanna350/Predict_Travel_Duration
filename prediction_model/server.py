@@ -30,9 +30,6 @@ class Result(Resource):
         gender = request.args.get('gender')
         age = request.args.get('age')
         stationId = request.args.get('id')
-        print('gender dtype', type(gender))
-        print('age dtype', type(age))
-        print('station Id dtype', type(stationId))
         flag = 0
 
         try:
@@ -40,19 +37,16 @@ class Result(Resource):
             lng = lng_dict[int(stationId)]
 
         except:
+            # when user keyed in station ID not in the data
             flag = 1
             lat = mean_lat
             lng = mean_lng
 
         X = [float(age), float(lat), float(lng), float(gender_encode[gender])]
-        print('X: ', X)
-        print('weight and bias', model.weight, model.bias)
 
         pred = np.dot(X, model.weight) + model.bias
-        print('prediction')
-        print(pred[0])
 
-        if flag:
+        if flag: # the case to enlighten the user but emit a compromising prediction
             return jsonify({'Minimum and Maximum station IDs the Data Accepts': [min, max],
                              'Duration of Ride Estimated for average lat/lng': pred[0]
                             })
