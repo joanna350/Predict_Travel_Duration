@@ -55,7 +55,6 @@ python -m pip install --user .
 * Now you can go to any directory and open Python console:
 ```
 import prediction_model
-prediction_mode.preprocess.run() # default path settings will be the root of this directory though.
-				# beware of this when using it without parameters. Otherwise use at your will.
-prediction_mode.models.main()  # did not set the dataframe and path to any default values. Need setting
+prediction_mode.preprocess.run() # default path settings will apply at the root of the directory.
+prediction_mode.models.main(dataframe_returned_from_run, output_path)
 ```
