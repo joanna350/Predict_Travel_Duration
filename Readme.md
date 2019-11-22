@@ -17,21 +17,22 @@ python(version adequately) -m pip install --user -Iv '__package_name__==__versio
 ```
 
 ## File Structure
-+── Readme.md
-+── data
-│   +── Documentation
-│   │   +── bike_trips_data_documentation.txt
-│   │   +── weather_data_documentation.pdf
-│   +── hubway_stations.csv
-│   +── hubway_trips.csv
-+-- ridetime_prediction
+```
+|── Readme.md
+|-─ data
+│   |-─ Documentation
+│   │   |-─ bike_trips_data_documentation.txt
+│   │   └── weather_data_documentation.pdf
+│   |-─ hubway_stations.csv
+│   └── hubway_trips.csv
+|-- ridetime_prediction
 |   |-- models.py
 |   |-- preprocess.py
 |   |-- run.sh
-|   +-- trips_data.csv
-+-- setup.py
-+-- tests
-
+|   └── trips_data.csv
+|-- setup.py
+└── tests
+```
 
 ## Test
 
