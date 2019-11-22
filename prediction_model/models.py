@@ -61,6 +61,12 @@ class Model():
         self.X_train, self.X_test, self.y_train, self.y_test =\
                     train_test_split(X, y, test_size = 0.2, random_state = 42)
 
+        print('Data split size in the order of:')
+        print('X_train', len(self.X_train))
+        print('X_test', len(self.X_test))
+        print('y_train', len(self.y_train))
+        print('y_test', len(self.y_test)
+
 
     def fit(self, alpha = 10):
         '''
@@ -101,9 +107,6 @@ class Model():
 
         print('RMSE for test data...: {}'.format(rmse_test))
 
-    # TODO:
-    #  docstrings, log messages throughout the code
-
 
 def main(df, filename):
     '''
@@ -127,6 +130,7 @@ def main(df, filename):
 
     with open(filename, 'wb') as out_path:
         pickle.dump(linearRegressionModel, out_path, -1)
+
 
 def argparser():
     '''

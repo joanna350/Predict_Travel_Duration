@@ -6,11 +6,12 @@ Python 3.7
 
 ### Dependency
 ```
+numpy==1.17.2
 flask==1.1.1
+flask-restful
 pandas==0.25.1
 sklearn==0.21.3
-numpy==1.17.2
-flask-restful
+setuptools==41.6.0
 ```
 
 ### Installation
@@ -88,3 +89,11 @@ http://0.0.0.0:8000/parameters?gender=Male&age=24&id=4
 
 * Returns jsonified response based on pure calculation
 
+
+### Unit Test for removal of data and Integration Test for added data
+
+* Run:
+```
+tests.py
+```
+* change dataframe as you like/ used built-in modlue of unittest
