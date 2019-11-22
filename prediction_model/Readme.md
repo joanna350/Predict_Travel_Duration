@@ -1,7 +1,7 @@
 ### Environment
 ```
 MacOS Catalina v10.15.1
-Python 3.7
+Python 3.7.3
 ```
 
 ### Dependency
@@ -18,7 +18,8 @@ setuptools==41.6.0
 ```
 python(version adequately) -m pip install --user -Iv '__package_name__==__version__'
 ```
-* I didn't use version match, but it may be necessary in the future
+* didn't use version match, may be necessary as packages evolve and outdated settings allow recreation
+* `-Iv` is another argument I rarely use, just to ignore the last version and install anew
 
 ### File Structure
 ```
@@ -38,7 +39,7 @@ python(version adequately) -m pip install --user -Iv '__package_name__==__versio
 |   |-- preprocess.py
 |   |-- run.sh
 |   |-- server.py
-|   |-- tests
+|   |-- tests.py
 |   `-- trips_data.csv
 `-- setup.py
 ```
@@ -46,7 +47,7 @@ python(version adequately) -m pip install --user -Iv '__package_name__==__versio
 ### How to Test
 
 * For Argparse' end-to-end model generation:
-* The first line may better be removed depending on the user
+* The first line most likely should be removed depending on the user (I have path and alias settings)
 
 ```
 ./run.sh
@@ -57,13 +58,17 @@ python(version adequately) -m pip install --user -Iv '__package_name__==__versio
 * Go to the directory where there is `setup.py`
 * Then run:
 ```
-python -m pip install --user .
+python(version) -m pip install --user .
 ```
-* This is develop mode, but user-specific issue made me choose this mode.
+* This is develop mode, but user-specific issue with install mode let me stay on this.
 
 * Now you can go to any directory and open Python console:
 ```
 import prediction_model
+```
+
+* Examples of invoking the main functions from each script
+```
 prediction_mode.preprocess.run() # default path settings will apply at the root of the directory.
 prediction_mode.models.main(dataframe_returned_from_run, output_path)
 ```
@@ -80,20 +85,22 @@ python(again-adequate-versionname-if-no-alias) server.py
 http://0.0.0.0:8000/parameters?gender={USER_SET}&age={US}&id={US}
 ```
 
-* US short for user-set, parameters {gender, age, station id} can vary in order
+* US short for user-set, parameters {gender, age, station id} can be typed in varying order
 
 * Example:
 ```
 http://0.0.0.0:8000/parameters?gender=Male&age=24&id=4
 ```
 
-* Returns jsonified response based on pure calculation
+* Returns Jsonified response based on pure numpy calculation
 
 
 ### Unit Test for removal of data and Integration Test for added data
 
 * Run:
 ```
-tests.py
+python tests.py
 ```
-* change dataframe as you like/ used built-in modlue of unittest
+* change test dataframe as you like
+
+* Used built-in module of unittest
