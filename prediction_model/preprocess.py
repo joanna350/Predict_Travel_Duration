@@ -28,7 +28,7 @@ def fill_statn(trp_df):
     '''
     trp_df['strt_statn'] = trp_df['strt_statn'].fillna(0)
     trp_df['strt_statn'] = trp_df['strt_statn'].astype('int32')
-    
+
     return trp_df
 
 def fill_gender(trp_df):

@@ -26,6 +26,9 @@ max, min = max(lng_dict.keys()), min(lng_dict.keys())
 
 
 class Result(Resource):
+    '''
+    resourceful routing from Flask-RESTful service
+    '''
     def get(self):
         gender = request.args.get('gender')
         age = request.args.get('age')
@@ -46,7 +49,7 @@ class Result(Resource):
 
         pred = np.dot(X, model.weight) + model.bias
 
-        if flag: # the case to enlighten the user but emit a compromising prediction
+        if flag: # the case to enlighten the user as it emits a compromising prediction
             return jsonify({'Minimum and Maximum station IDs the Data Accepts': [min, max],
                              'Duration of Ride Estimated for average lat/lng': pred[0]
                             })

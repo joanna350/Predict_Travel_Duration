@@ -1,3 +1,7 @@
+### Project Scope
+- Packaged Flask web service to return results from a backend engine that utilitse linear regression
+- Returns the duration of ride predicted based on age, gender and station ID information
+
 ### Environment
 ```
 MacOS Catalina v10.15.1
@@ -47,11 +51,11 @@ python(version adequately) -m pip install --user -Iv '__package_name__==__versio
 ### How to Test
 
 * For Argparse' end-to-end model generation:
-* The first line most likely should be removed depending on the user (I have path and alias settings)
 
 ```
 ./run.sh
 ```
+* first assign authority to invoke the shell script with `chmod u+x`
 
 ### Package
 
@@ -77,7 +81,7 @@ prediction_mode.models.main(dataframe_returned_from_run, output_path)
 
 * To Run:
 ```
-python(again-adequate-versionname-if-no-alias) server.py
+python(version-or-alias) server.py
 ```
 
 * Launch on 
@@ -92,7 +96,7 @@ http://0.0.0.0:8000/parameters?gender={USER_SET}&age={US}&id={US}
 http://0.0.0.0:8000/parameters?gender=Male&age=24&id=4
 ```
 
-* Returns Jsonified response based on pure numpy calculation
+* Returns Jsonified response based on numpy calculation
 
 
 ### Unit Test for removal of data and Integration Test for added data
