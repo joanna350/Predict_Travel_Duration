@@ -1,6 +1,6 @@
 ### Project Scope
 - Packaged Flask web service to return results from a backend engine that utilitse linear regression
-- Returns the duration of ride predicted based on age, gender and station ID information
+- Returns the duration of ride predicted based on age, gender and station ID given by a user at an endpoint. Examples follow
 
 ### Environment
 ```
