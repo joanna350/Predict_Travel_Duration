@@ -1,7 +1,7 @@
 ### Project Scope
 - Packaged Flask web service
 - What it does is return predicted duration of ride
-- Prediction model is trained from [Boston hubway database] (https://www.kaggle.com/datasets/8758bc11f7ec8eaddad308dc9ec868c0f66403dee81d2bc9062621c57611be8f?resource=download)
+- Prediction model is trained from [Boston hubway database](https://www.kaggle.com/datasets/8758bc11f7ec8eaddad308dc9ec868c0f66403dee81d2bc9062621c57611be8f?resource=download)
 - Training algorithm is linear regression
 - Prediction result is parametrized by age, gender and station ID(in number)
 - Endpoint receives the three parameters in the format below
