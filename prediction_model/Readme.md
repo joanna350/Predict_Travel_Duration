@@ -14,7 +14,7 @@ python models.py
 python server.py
 ```
 
-* Launch on 
+* Launch 
 ```
 http://0.0.0.0:8000/parameters?gender={}&age={}&id={}
 ```
@@ -22,39 +22,14 @@ http://0.0.0.0:8000/parameters?gender={}&age={}&id={}
 * Replace {} with parameters for gender(string), age(int), station id(int). Order does not matter.
 
 * Example:
-```
-http://0.0.0.0:8000/parameters?gender=Male&age=24&id=4
-```
-
 ![Example](assets/images/post_parameters_correct_format.png)
 
 * Returns Jsonified response based on numpy calculation
-- Example when all formats complied
-```
-{
-  "Duration of Ride Predicted based on the Model": 1013.9397811024401, 
-  "Given": {
-    "age": "23", 
-    "gender": "Female", 
-    "station ID": "4"
-  }
-}
-```
 ![Return_example](assets/images/get_prediction_result.png)
 
 - Example when you type in station ID in string or outside the range
-
 ![Example_2](assets/images/post_parameters_wrong_format.png)
 
-```
-{
-  "Duration of Ride Estimated for average lat/lng": 1014.3503416104868, 
-  "Minimum and Maximum station IDs the Data Accepts": [
-    3, 
-    145
-  ]
-}
-```
 ![Return_example2](assets/images/get_error.png)
 
 ### Environment
