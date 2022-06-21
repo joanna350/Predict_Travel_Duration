@@ -30,6 +30,7 @@ http://0.0.0.0:8000/parameters?gender={}&age={}&id={}
 - Example when you type in station ID in string or outside the range
 ![Example_2](assets/images/post_parameters_wrong_format.png)
 
+- Return error message
 ![Return_example2](assets/images/get_error.png)
 
 ### Environment
