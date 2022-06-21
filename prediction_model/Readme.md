@@ -14,43 +14,20 @@ Python 3.7.3
 
 ### Dependency
 ```
-numpy==1.17.2
-flask==1.1.1
+numpy
+flask
 flask-restful
-pandas==0.25.1
-sklearn==0.21.3
-setuptools==41.6.0
+pandas
+sklearn
+setuptools
 ```
 
 ### Installation
 ```
-python -m pip install --user -Iv '__package_name__==__version__'
+python -m pip install --user __package_name__
 ```
 
-### File Structure
-```
-|-- prediction_model
-|   |-- Readme.md
-|   |-- __init__.py
-|   |-- data
-|   |   |-- Documentation
-|   |   |   |-- bike_trips_data_documentation.txt
-|   |   |   `-- weather_data_documentation.pdf
-|   |   |-- hubway_stations.csv
-|   |   `-- hubway_trips.csv
-|   |-- lat_dict.p
-|   |-- lng_dict.p
-|   |-- model.p
-|   |-- models.py
-|   |-- preprocess.py
-|   |-- run.sh
-|   |-- server.py
-|   |-- tests.py
-|   `-- trips_data.csv
-`-- setup.py
-```
-
-### How to Test
+## How to Test
 
 * For Argparse' end-to-end model generation:
 
@@ -58,7 +35,7 @@ python -m pip install --user -Iv '__package_name__==__version__'
 ```
 ./run.sh
 ```
-* first assign authority to invoke the shell script with `chmod u+x`
+* for access error, run `chmod u+x`
 
 ### Package for develop
 
