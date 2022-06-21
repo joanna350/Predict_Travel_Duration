@@ -19,14 +19,14 @@ python server.py
 http://0.0.0.0:8000/parameters?gender={}&age={}&id={}
 ```
 
-* Replace {} with parameters for gender(string), age(int), station id(int). Order is not a matter.
+* Replace {} with parameters for gender(string), age(int), station id(int). Order does not matter.
 
 * Example:
 ```
 http://0.0.0.0:8000/parameters?gender=Male&age=24&id=4
 ```
 
-![Example](/assets/images/post_parameters_correct_format.png)
+![Example](prediction_model/assets/images/post_parameters_correct_format.png)
 
 * Returns Jsonified response based on numpy calculation
 - Example when all formats complied
