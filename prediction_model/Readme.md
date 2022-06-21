@@ -55,7 +55,7 @@ http://0.0.0.0:8000/parameters?gender=Male&age=24&id=4
   ]
 }
 ```
-![Return_example2](/assets/images/get_error.png)
+![Return_example2](assets/images/get_error.png)
 
 ### Environment
 ```
