@@ -26,7 +26,7 @@ http://0.0.0.0:8000/parameters?gender={}&age={}&id={}
 http://0.0.0.0:8000/parameters?gender=Male&age=24&id=4
 ```
 
-![Example](prediction_model/assets/images/post_parameters_correct_format.png)
+![Example](assets/images/post_parameters_correct_format.png)
 
 * Returns Jsonified response based on numpy calculation
 - Example when all formats complied
@@ -40,11 +40,11 @@ http://0.0.0.0:8000/parameters?gender=Male&age=24&id=4
   }
 }
 ```
-![Return_example](/assets/images/get_prediction_result.png)
+![Return_example](assets/images/get_prediction_result.png)
 
 - Example when you type in station ID in string or outside the range
 
-![Example_2](/assets/images/post_parameters_wrong_format.png)
+![Example_2](assets/images/post_parameters_wrong_format.png)
 
 ```
 {
