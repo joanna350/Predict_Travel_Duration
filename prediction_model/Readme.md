@@ -25,7 +25,7 @@ http://0.0.0.0:8000/parameters?gender={}&age={}&id={}
 ![Example](assets/images/post_parameters_correct_format.png)
 
 * Returns Jsonified response based on numpy calculation
-![Return_example](assets/images/get_prediction_result.png)
+![Return_example](assets/images/get_prediction_result_refine.png)
 
 - Example when you type in station ID in string or outside the range
 ![Example_2](assets/images/post_parameters_wrong_format.png)
