@@ -52,8 +52,8 @@ class Model():
 
         # don't think it's a good idea, but checked that it assigns Unknown to 0 (same as male)
         # acc to some discussions online it is a more proper way to handle such situation
-        self.df['gender'] = pd.get_dummies(self.df['gender'])
-
+        print(f"{self.df['gender'].head(4)}")
+        self.df['gender'].replace({'Male':0,'Unknown':0,'Female':1}, inplace=True)
         X = pd.concat([self.df['age'], self.df['lat'],
                        self.df['lng'], self.df['gender']], axis=1, sort=False)
         y = self.df['duration']
@@ -65,7 +65,7 @@ class Model():
         print('X_train', len(self.X_train))
         print('X_test', len(self.X_test))
         print('y_train', len(self.y_train))
-        print('y_test', len(self.y_test)
+        print('y_test', len(self.y_test))
 
 
     def fit(self, alpha = 10):
@@ -92,17 +92,15 @@ class Model():
         print('RMSE per training data...: {}'.format(rmse_training))
 
 
-    def predict(self, X):
+    def predict(self):
         '''
         use the weight/bias params from fit function
         :param X: used for prediction
         :emits: RMSE based on test data
         '''
-
-        if X == 'None':
-            X = self.X_test
-
-        pred = np.dot(X, self.weight) + self.bias
+        print('predict', self.weight, self.weight.shape)
+        print(self.X_test, self.X_test.shape)
+        pred = np.dot(self.X_test, self.weight) + self.bias
         rmse_test = RMSE(pred, self.y_test)
 
         print('RMSE for test data...: {}'.format(rmse_test))

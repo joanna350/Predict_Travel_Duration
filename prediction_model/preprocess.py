@@ -145,9 +145,9 @@ def run(path_trp = 'data/hubway_trips.csv',
     lat_dict, lng_dict = fill_loc_statn(stn_df)
 
     trips_data = fill_loc_trips(trips_data, lat_dict, lng_dict)
-
+    print(trips_data.head(5))
     # save for convenient debugging of the other script
-    trips_data.to_csv('trips_data.csv', sep='\t', encoding='utf-8', mode = 'w', index=False)
+    trips_data.to_csv('trips_data.csv', sep='\t', encoding='utf-8', index=False)
 
     return trips_data
 

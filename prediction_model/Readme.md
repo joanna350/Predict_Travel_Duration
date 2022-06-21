@@ -1,6 +1,10 @@
 ### Project Scope
-- Packaged Flask web service to return results from a backend engine that utilitse linear regression
-- Returns the duration of ride predicted based on age, gender and station ID given by a user at an endpoint. Examples follow
+- Packaged Flask web service
+- What it does is return predicted duration of ride
+- Prediction model is trained from [Boston hubway database] (https://www.kaggle.com/datasets/8758bc11f7ec8eaddad308dc9ec868c0f66403dee81d2bc9062621c57611be8f?resource=download)
+- Training algorithm is linear regression
+- Prediction result is parametrized by age, gender and station ID(in number)
+- Endpoint receives the three parameters in the format below
 
 ### Environment
 ```
@@ -20,10 +24,8 @@ setuptools==41.6.0
 
 ### Installation
 ```
-python(version adequately) -m pip install --user -Iv '__package_name__==__version__'
+python -m pip install --user -Iv '__package_name__==__version__'
 ```
-* didn't use version match, may be necessary as packages evolve and outdated settings allow recreation
-* `-Iv` is another argument I rarely use, just to ignore the last version and install anew
 
 ### File Structure
 ```
@@ -52,44 +54,33 @@ python(version adequately) -m pip install --user -Iv '__package_name__==__versio
 
 * For Argparse' end-to-end model generation:
 
+- place the missing csv files under data directory
 ```
 ./run.sh
 ```
 * first assign authority to invoke the shell script with `chmod u+x`
 
-### Package
+### Package for develop
 
-* Go to the directory where there is `setup.py`
-* Then run:
+* Go to the directory where there is `setup.py` and  run:
 ```
-python(version) -m pip install --user .
-```
-* This is develop mode, but user-specific issue with install mode let me stay on this.
-
-* Now you can go to any directory and open Python console:
-```
-import prediction_model
-```
-
-* Examples of invoking the main functions from each script
-```
-prediction_mode.preprocess.run() # default path settings will apply at the root of the directory.
-prediction_mode.models.main(dataframe_returned_from_run, output_path)
+pip install -e .
 ```
 
 ### Emit Prediction Result using REST Endpoint
 
-* To Run:
+* Run:
 ```
+python models.py
 python(version-or-alias) server.py
 ```
 
 * Launch on 
 ```
-http://0.0.0.0:8000/parameters?gender={USER_SET}&age={US}&id={US}
+http://0.0.0.0:8000/parameters?gender={}&age={}&id={}
 ```
 
-* US short for user-set, parameters {gender, age, station id} can be typed in varying order
+* Replace {} with parameters for gender(string), age(int), station id(int). Order is not a matter.
 
 * Example:
 ```
@@ -97,7 +88,27 @@ http://0.0.0.0:8000/parameters?gender=Male&age=24&id=4
 ```
 
 * Returns Jsonified response based on numpy calculation
-
+- Example when all formats complied
+```
+{
+  "Duration of Ride Predicted based on the Model": 1013.9397811024401, 
+  "Given": {
+    "age": "23", 
+    "gender": "Female", 
+    "station ID": "4"
+  }
+}
+```
+- Example when you type in station ID in string or outside the range
+```
+{
+  "Duration of Ride Estimated for average lat/lng": 1014.3503416104868, 
+  "Minimum and Maximum station IDs the Data Accepts": [
+    3, 
+    145
+  ]
+}
+```
 
 ### Unit Test for removal of data and Integration Test for added data
 
